@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>3手詰トレーニング</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>3手詰トレーニング</h1>
+      <div class="difficulty-selector">
+        <label>難易度:</label>
+        <select id="difficulty">
+          <option value="">おまかせ</option>
+          <option value="初級">初級</option>
+          <option value="中級">中級</option>
+          <option value="上級">上級</option>
+          <option value="有段">有段</option>
+        </select>
+        <button id="new-problem">新しい問題</button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <div class="board-area">
+        <div class="hand hand-defender" id="hand-defender"></div>
+        <canvas id="board" width="540" height="540"></canvas>
+        <div class="hand hand-attacker" id="hand-attacker"></div>
+      </div>
+
+      <aside class="info-panel">
+        <div id="status" class="status">問題を読み込み中…</div>
+        <div id="difficulty-badge" class="difficulty-badge"></div>
+        <div id="move-list" class="move-list"></div>
+        <div class="controls">
+          <button id="undo">待った</button>
+          <button id="hint">ヒント</button>
+          <button id="reveal">解答を見る</button>
+          <button id="reset">最初から</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
