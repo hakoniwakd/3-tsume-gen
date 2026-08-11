@@ -1,0 +1,27 @@
+{
+  "name": "3手詰トレーニング",
+  "short_name": "3手詰",
+  "description": "オフラインで遊べる3手詰めの自動生成PWA",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f4ef",
+  "theme_color": "#5a3a1a",
+  "lang": "ja",
+  "categories": ["games", "education"],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
