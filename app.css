@@ -1,0 +1,70 @@
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  margin: 0; background: #f6f4ef; color: #333;
+}
+.app { max-width: 1000px; margin: 0 auto; padding: 16px; }
+.app-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+}
+.app-header h1 { font-size: 22px; margin: 0; }
+.app-main { display: grid; grid-template-columns: auto 1fr; gap: 24px; }
+@media (max-width: 860px) { .app-main { grid-template-columns: 1fr; } }
+
+.board-area { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.hand {
+  min-height: 40px; padding: 6px 12px; background: #fff;
+  border: 1px solid #ccc; border-radius: 6px;
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  width: 100%; max-width: 504px;
+}
+.hand-piece {
+  background: #f5deb3; border: 1px solid #5a3a1a; border-radius: 4px;
+  padding: 4px 10px; cursor: pointer; font-family: "Yu Mincho", serif; font-size: 16px;
+}
+.hand-piece:hover { background: #f0d090; }
+.hand-empty { color: #999; font-size: 13px; }
+canvas { border: 2px solid #5a3a1a; cursor: pointer; background: #f0d9a6; touch-action: manipulation; }
+
+.info-panel { display: flex; flex-direction: column; gap: 12px; }
+.status { padding: 12px; background: #fff; border-left: 4px solid #4a90e2; border-radius: 4px; font-size: 15px; }
+.status-success { border-color: #4caf50; background: #eaf7ea; }
+.status-error   { border-color: #e74c3c; background: #fbeaea; }
+.status-hint    { border-color: #f5a623; background: #fdf6e8; }
+.progress { font-size: 12px; color: #777; min-height: 16px; }
+
+.settings { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 10px 12px; }
+.settings label { margin-right: 8px; }
+.tag-group { margin-top: 8px; border: 1px solid #ddd; border-radius: 4px; }
+.tag-group legend { font-size: 12px; color: #666; padding: 0 4px; }
+.tag-group label { display: inline-flex; gap: 4px; margin: 2px 8px 2px 0; font-size: 13px; }
+
+.controls { display: flex; gap: 8px; flex-wrap: wrap; }
+.controls button {
+  flex: 1; min-width: 100px; padding: 10px; border: 1px solid #999;
+  background: #fff; border-radius: 6px; cursor: pointer; font-size: 14px;
+}
+.controls button:hover { background: #f0f0f0; }
+
+.difficulty-badge { display: inline-block; padding: 6px 12px; border-radius: 4px; font-weight: bold; color: #fff; background: #999; font-size: 13px; }
+.difficulty-badge.label-初級 { background: #7cb342; }
+.difficulty-badge.label-中級 { background: #4a90e2; }
+.difficulty-badge.label-上級 { background: #f57c00; }
+.difficulty-badge.label-有段 { background: #c62828; }
+
+.move-list { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 12px; max-height: 180px; overflow-y: auto; }
+.move-entry { padding: 3px 0; font-family: "Yu Mincho", serif; font-size: 16px; }
+.move-entry.reply { color: #666; }
+
+.update-banner {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #333; color: #fff; padding: 10px 16px;
+  display: flex; gap: 10px; align-items: center; z-index: 99;
+}
+.update-banner button { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; }
+.ios-install-hint {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #5a3a1a; color: #fff; padding: 8px 12px; font-size: 13px; text-align: center;
+}
+.install-button { padding: 8px 12px; border-radius: 6px; border: 1px solid #5a3a1a; background: #fff; cursor: pointer; }

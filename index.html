@@ -1,207 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>3手詰トレーニング</title>
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <meta name="theme-color" content="#5a3a1a" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #f6f4ef;
-      color: #333;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif;
-    }
-
-    .app {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-
-    .app-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    .status {
-      min-height: 44px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      background: #fff;
-      border-left: 5px solid #4a90e2;
-      border-radius: 6px;
-      white-space: pre-wrap;
-    }
-
-    .status.success {
-      border-color: #4caf50;
-      background: #eef8ee;
-    }
-
-    .status.error {
-      border-color: #e53935;
-      background: #fdecec;
-    }
-
-    .difficulty {
-      margin-bottom: 10px;
-      color: #555;
-      font-size: 14px;
-    }
-
-    .board-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .hand {
-      width: min(92vw, 468px);
-      min-height: 44px;
-      padding: 6px;
-      border: 1px solid #d5c7b2;
-      border-radius: 8px;
-      background: #fffdf8;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .hand button {
-      min-width: 48px;
-      min-height: 36px;
-      border: 1px solid #8c6f4f;
-      border-radius: 6px;
-      background: #f5deb3;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .hand button.selected {
-      outline: 3px solid #4a90e2;
-    }
-
-    .hand .empty {
-      color: #999;
-      font-size: 14px;
-    }
-
-    .board {
-      display: grid;
-      grid-template-columns: repeat(9, min(9.8vw, 48px));
-      grid-template-rows: repeat(9, min(9.8vw, 48px));
-      gap: 1px;
-      padding: 2px;
-      background: #5a3a1a;
-      border: 3px solid #5a3a1a;
-      border-radius: 4px;
-    }
-
-    .cell {
-      border: none;
-      background: #f0d9a6;
-      font-size: clamp(16px, 4vw, 24px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      padding: 0;
-      user-select: none;
-    }
-
-    .cell.selected {
-      outline: 3px solid #4a90e2;
-      outline-offset: -3px;
-    }
-
-    .cell.white {
-      transform: rotate(180deg);
-    }
-
-    .cell.promoted {
-      color: #b00000;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .controls button {
-      flex: 1;
-      min-width: 110px;
-      padding: 10px 12px;
-      border: 1px solid #999;
-      border-radius: 8px;
-      background: #fff;
-      cursor: pointer;
-    }
-
-    .moves {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px;
-      min-height: 44px;
-      line-height: 1.8;
-      font-family: "游明朝", "Yu Mincho", serif;
-    }
-
-    .install-button {
-      display: none;
-      margin-left: auto;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #7a5c39;
-      background: #fff;
-      cursor: pointer;
-    }
-  </style>
+  <meta name="theme-color" content="#5a3a1a">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./app.css">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
 </head>
 <body>
-  <main class="app">
+  <div class="app">
     <header class="app-header">
       <h1>3手詰トレーニング</h1>
-      <button id="install-button" class="install-button">アプリとしてインストール</button>
+      <span id="difficulty-badge" class="difficulty-badge"></span>
     </header>
 
-    <section id="status" class="status">起動中…</section>
-    <section id="difficulty" class="difficulty"></section>
+    <main class="app-main">
+      <section class="board-area">
+        <div id="hand-defender" class="hand" title="受方の持ち駒"></div>
+        <canvas id="board"></canvas>
+        <div id="hand-attacker" class="hand" title="攻方（あなた）の持ち駒"></div>
+      </section>
 
-    <section class="board-wrap">
-      <div id="hand-top" class="hand" aria-label="後手の持ち駒"></div>
-      <div id="board" class="board" aria-label="将棋盤"></div>
-      <div id="hand-bottom" class="hand" aria-label="先手の持ち駒"></div>
-    </section>
+      <aside class="info-panel">
+        <div id="status" class="status">起動中…</div>
+        <div id="progress" class="progress"></div>
 
-    <section class="controls">
-      <button id="new-problem">新しい問題</button>
-      <button id="reset">最初から</button>
-      <button id="reveal">解答を見る</button>
-    </section>
+        <div class="settings">
+          <label>難易度:
+            <select id="difficulty">
+              <option value="">おまかせ</option>
+              <option value="初級">初級</option>
+              <option value="中級" selected>中級</option>
+              <option value="上級">上級</option>
+              <option value="有段">有段</option>
+            </select>
+          </label>
+          <fieldset class="tag-group">
+            <legend>含めるタグ</legend>
+            <label><input type="checkbox" name="req" value="sacrifice"> 捨駒</label>
+            <label><input type="checkbox" name="req" value="unpromote"> 不成</label>
+            <label><input type="checkbox" name="req" value="pawn_drop"> 打歩詰</label>
+            <label><input type="checkbox" name="req" value="limited_drop"> 限定打</label>
+            <label><input type="checkbox" name="req" value="distant_drop"> 遠打</label>
+            <label><input type="checkbox" name="req" value="small_pieces"> 小駒問題</label>
+            <label><input type="checkbox" name="req" value="no_hand"> 持駒なし</label>
+          </fieldset>
+        </div>
 
-    <section id="moves" class="moves"></section>
-  </main>
+        <div class="controls">
+          <button id="new-problem">新しい問題</button>
+          <button id="daily">📅 デイリー</button>
+          <button id="undo">待った</button>
+          <button id="hint">ヒント</button>
+          <button id="reveal">解答を見る</button>
+          <button id="reset">最初から</button>
+          <button id="share">📤 共有URLコピー</button>
+        </div>
 
-  <script type="module" src="./js/app.js"></script>
+        <div id="move-list" class="move-list"></div>
+      </aside>
+    </main>
+  </div>
+
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
