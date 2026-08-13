@@ -83,7 +83,7 @@ export class ProblemController extends EventTarget {
         this._emit('solved', { elapsedMs: Date.now() - this.startTime });
       } else {
         this._undoOne();
-        this._emit('wrong-move', { message: 'まだ詰んでいません。' });
+        this._emit('wrong-move', { message: '詰んでいません。' });
       }
     }
   }
@@ -209,7 +209,7 @@ controller.addEventListener('problem-loaded', () => {
   boardView.lastMove = null;
   moveListEl.innerHTML = '';
   refreshViews();
-  setStatus('先手番です。3手で詰ましてください。');
+  setStatus('先手番です。3手で詰ませてください。');
   const d = p.difficulty;
   badgeEl.textContent = `${d.label}（${d.score}）` + (d.tags.length ? ' ' + d.tags.map(t => '#' + t).join(' ') : '');
   badgeEl.className = 'difficulty-badge label-' + d.label;
